@@ -110,15 +110,60 @@
     <div id="messages"></div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
   <script>
+    // Cấu hình Firebase của bạn
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2ikCTbjpBs3L5gwiLKWOp5kAlBpUxSNI",
+      authDomain: "a8-noitaoranhungconhodungmanh.firebaseapp.com",
+      projectId: "a8-noitaoranhungconhodungmanh",
+      storageBucket: "a8-noitaoranhungconhodungmanh.firebasestorage.app",
+      messagingSenderId: "795336127757",
+      appId: "1:795336127757:web:5351fe6536b37ac90e6c44",
+      measurementId: "G-SNXX0VKYXR"
+    };
+
+    // Khởi tạo Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     // Hàm load lời nhắn cho 1 user
-    function loadMessages(userId) {
+    async function loadMessages(userId) {
       document.getElementById('user-title').innerText = "Lời nhắn của " + userId;
       const messagesDiv = document.getElementById('messages');
-      messagesDiv.innerHTML = "(Hiển thị các lời nhắn từ Firebase cho: " + userId + ")";
+      messagesDiv.innerHTML = "Đang tải...";
+
+      try {
+        const querySnapshot = await db
+          .collection("messages")
+          .doc(userId)
+          .collection("inbox")
+          .orderBy("time", "desc")
+          .get();
+
+        messagesDiv.innerHTML = "";
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          messagesDiv.innerHTML += `
+            <div class="message">
+              <p>${data.content}</p>
+              <div class="time">${data.time}</div>
+            </div>
+          `;
+        });
+
+        if (messagesDiv.innerHTML === "") {
+          messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
+        }
+
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+        messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+      }
     }
   </script>
-
 </body>
 </html>
-
