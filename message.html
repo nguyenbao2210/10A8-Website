@@ -51,6 +51,10 @@
       font-size: 12px;
       color: #666;
     }
+    .sender {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
@@ -58,64 +62,122 @@
   <div class="sidebar">
     <h2>Danh sách bạn bè (10A8 – K24)</h2>
     <ul>
-      <li><a onclick="loadMessages('pham_nhat_an')">Phạm Nhật An</a></li>
-      <li><a onclick="loadMessages('tran_thuc_anh')">Trần Thục Anh</a></li>
-      <li><a onclick="loadMessages('nguyen_hong_anh')">Nguyễn Hồng Anh</a></li>
-      <li><a onclick="loadMessages('truong_nguyen_bao')">Trương Nguyên Bảo</a></li>
-      <li><a onclick="loadMessages('pham_ngoc_quynh_chi')">Phạm Ngọc Quỳnh Chi</a></li>
-      <li><a onclick="loadMessages('chu_ngoc_diep')">Chu Ngọc Diệp</a></li>
-      <li><a onclick="loadMessages('kim_nhat_dung')">Kim Nhật Dũng</a></li>
-      <li><a onclick="loadMessages('le_hai_dang')">Lê Hải Đăng</a></li>
-      <li><a onclick="loadMessages('nguyen_anh_duc')">Nguyễn Anh Đức</a></li>
-      <li><a onclick="loadMessages('dam_trong_hieu')">Đàm Trọng Hiếu</a></li>
-      <li><a onclick="loadMessages('pham_minh_hieu')">Phạm Minh Hiếu</a></li>
-      <li><a onclick="loadMessages('nguyen_duc_huy')">Nguyễn Đức Huy</a></li>
-      <li><a onclick="loadMessages('dao_duc_hung')">Đào Đức Hưng</a></li>
-      <li><a onclick="loadMessages('pham_cat_khanh')">Phạm Cát Khánh</a></li>
-      <li><a onclick="loadMessages('chu_ha_gia_khanh')">Chu Hà Gia Khánh</a></li>
-      <li><a onclick="loadMessages('ngo_xuan_khoa')">Ngô Xuân Khoa</a></li>
-      <li><a onclick="loadMessages('nguyen_dang_khoa')">Nguyễn Đăng Khoa</a></li>
-      <li><a onclick="loadMessages('nguyen_minh_khoi')">Nguyễn Minh Khôi</a></li>
-      <li><a onclick="loadMessages('pham_gia_khoi')">Phạm Gia Khôi</a></li>
-      <li><a onclick="loadMessages('tran_tung_lam')">Trần Tùng Lâm</a></li>
-      <li><a onclick="loadMessages('tran_lam')">Trần Lâm</a></li>
-      <li><a onclick="loadMessages('dang_tran_ha_linh')">Đặng Trần Hà Linh</a></li>
-      <li><a onclick="loadMessages('le_nhat_minh')">Lê Nhật Minh</a></li>
-      <li><a onclick="loadMessages('nguyen_vu_hoang_minh')">Nguyễn Vũ Hoàng Minh</a></li>
-      <li><a onclick="loadMessages('tran_duy_minh')">Trần Duy Minh</a></li>
-      <li><a onclick="loadMessages('bui_duong_tra_my')">Bùi Dương Trà My</a></li>
-      <li><a onclick="loadMessages('pham_nhat_nam')">Phạm Nhật Nam</a></li>
-      <li><a onclick="loadMessages('nguyen_ha_nghiep')">Nguyễn Hà Nghiệp</a></li>
-      <li><a onclick="loadMessages('nguyen_minh_ngoc')">Nguyễn Minh Ngọc</a></li>
-      <li><a onclick="loadMessages('tran_gia_phat')">Trần Gia Phát</a></li>
-      <li><a onclick="loadMessages('duong_thi_mai_phuong')">Dương Thị Mai Phương</a></li>
-      <li><a onclick="loadMessages('nguyen_anh_quan')">Nguyễn Anh Quân</a></li>
-      <li><a onclick="loadMessages('nguyen_minh_son')">Nguyễn Minh Sơn</a></li>
-      <li><a onclick="loadMessages('pham_thanh_thao')">Phạm Thanh Thảo</a></li>
-      <li><a onclick="loadMessages('nguyen_thanh_thao')">Nguyễn Thanh Thảo</a></li>
-      <li><a onclick="loadMessages('to_phuong_thao')">Tô Phương Thảo</a></li>
-      <li><a onclick="loadMessages('nguyen_thanh_thuy')">Nguyễn Thanh Thủy</a></li>
-      <li><a onclick="loadMessages('lai_hoang_lan_thy')">Lai Hoàng Lan Thy</a></li>
-      <li><a onclick="loadMessages('nguyen_thi_thanh_tra')">Nguyễn Thị Thanh Trà</a></li>
-      <li><a onclick="loadMessages('do_quynh_trang')">Đỗ Quỳnh Trang</a></li>
-      <li><a onclick="loadMessages('dang_khanh_vinh')">Đặng Khánh Vinh</a></li>
-      <li><a onclick="loadMessages('nguyen_quang_vinh')">Nguyễn Quang Vinh</a></li>
-      <li><a onclick="loadMessages('le_quang_vu')">Lê Quang Vũ</a></li>
-      <li><a onclick="loadMessages('vu_nhu_y')">Vũ Như Ý</a></li>
+      <li><a onclick="loadMessages('Phạm Nhật An')">Phạm Nhật An</a></li>
+      <li><a onclick="loadMessages('Trần Thục Anh')">Trần Thục Anh</a></li>
+      <li><a onclick="loadMessages('Nguyễn Hồng Anh')">Nguyễn Hồng Anh</a></li>
+      <li><a onclick="loadMessages('Trương Nguyên Bảo')">Trương Nguyên Bảo</a></li>
+      <li><a onclick="loadMessages('Phạm Ngọc Quỳnh Chi')">Phạm Ngọc Quỳnh Chi</a></li>
+      <li><a onclick="loadMessages('Chu Ngọc Diệp')">Chu Ngọc Diệp</a></li>
+      <li><a onclick="loadMessages('Kim Nhật Dũng')">Kim Nhật Dũng</a></li>
+      <li><a onclick="loadMessages('Lê Hải Đăng')">Lê Hải Đăng</a></li>
+      <li><a onclick="loadMessages('Nguyễn Anh Đức')">Nguyễn Anh Đức</a></li>
+      <li><a onclick="loadMessages('Đàm Trọng Hiếu')">Đàm Trọng Hiếu</a></li>
+      <li><a onclick="loadMessages('Phạm Minh Hiếu')">Phạm Minh Hiếu</a></li>
+      <li><a onclick="loadMessages('Nguyễn Đức Huy')">Nguyễn Đức Huy</a></li>
+      <li><a onclick="loadMessages('Đào Đức Hưng')">Đào Đức Hưng</a></li>
+      <li><a onclick="loadMessages('Phạm Cát Khánh')">Phạm Cát Khánh</a></li>
+      <li><a onclick="loadMessages('Chu Hà Gia Khánh')">Chu Hà Gia Khánh</a></li>
+      <li><a onclick="loadMessages('Ngô Xuân Khoa')">Ngô Xuân Khoa</a></li>
+      <li><a onclick="loadMessages('Nguyễn Đăng Khoa')">Nguyễn Đăng Khoa</a></li>
+      <li><a onclick="loadMessages('Nguyễn Minh Khôi')">Nguyễn Minh Khôi</a></li>
+      <li><a onclick="loadMessages('Phạm Gia Khôi')">Phạm Gia Khôi</a></li>
+      <li><a onclick="loadMessages('Trần Tùng Lâm')">Trần Tùng Lâm</a></li>
+      <li><a onclick="loadMessages('Trần Lâm')">Trần Lâm</a></li>
+      <li><a onclick="loadMessages('Đặng Trần Hà Linh')">Đặng Trần Hà Linh</a></li>
+      <li><a onclick="loadMessages('Lê Nhật Minh')">Lê Nhật Minh</a></li>
+      <li><a onclick="loadMessages('Nguyễn Vũ Hoàng Minh')">Nguyễn Vũ Hoàng Minh</a></li>
+      <li><a onclick="loadMessages('Trần Duy Minh')">Trần Duy Minh</a></li>
+      <li><a onclick="loadMessages('Bùi Dương Trà My')">Bùi Dương Trà My</a></li>
+      <li><a onclick="loadMessages('Phạm Nhật Nam')">Phạm Nhật Nam</a></li>
+      <li><a onclick="loadMessages('Nguyễn Hà Nghiệp')">Nguyễn Hà Nghiệp</a></li>
+      <li><a onclick="loadMessages('Nguyễn Minh Ngọc')">Nguyễn Minh Ngọc</a></li>
+      <li><a onclick="loadMessages('Trần Gia Phát')">Trần Gia Phát</a></li>
+      <li><a onclick="loadMessages('Dương Thị Mai Phương')">Dương Thị Mai Phương</a></li>
+      <li><a onclick="loadMessages('Nguyễn Anh Quân')">Nguyễn Anh Quân</a></li>
+      <li><a onclick="loadMessages('Nguyễn Minh Sơn')">Nguyễn Minh Sơn</a></li>
+      <li><a onclick="loadMessages('Phạm Thanh Thảo')">Phạm Thanh Thảo</a></li>
+      <li><a onclick="loadMessages('Nguyễn Thanh Thảo')">Nguyễn Thanh Thảo</a></li>
+      <li><a onclick="loadMessages('Tô Phương Thảo')">Tô Phương Thảo</a></li>
+      <li><a onclick="loadMessages('Nguyễn Thanh Thủy')">Nguyễn Thanh Thủy</a></li>
+      <li><a onclick="loadMessages('Lai Hoàng Lan Thy')">Lai Hoàng Lan Thy</a></li>
+      <li><a onclick="loadMessages('Nguyễn Thị Thanh Trà')">Nguyễn Thị Thanh Trà</a></li>
+      <li><a onclick="loadMessages('Đỗ Quỳnh Trang')">Đỗ Quỳnh Trang</a></li>
+      <li><a onclick="loadMessages('Đặng Khánh Vinh')">Đặng Khánh Vinh</a></li>
+      <li><a onclick="loadMessages('Nguyễn Quang Vinh')">Nguyễn Quang Vinh</a></li>
+      <li><a onclick="loadMessages('Lê Quang Vũ')">Lê Quang Vũ</a></li>
+      <li><a onclick="loadMessages('Vũ Như Ý')">Vũ Như Ý</a></li>
     </ul>
   </div>
 
   <div class="content">
     <h2 id="user-title">Chọn tên để xem lời nhắn</h2>
     <div id="messages"></div>
+
+        <h3>Gửi lời nhắn</h3>
+    <form id="messageForm">
+      <label for="receiver">Người nhận:</label><br>
+      <select id="receiver" required>
+        <option value="">--Chọn tên--</option>
+        <option>Phạm Nhật An</option>
+        <option>Trần Thục Anh</option>
+        <option>Nguyễn Hồng Anh</option>
+        <option>Trương Nguyên Bảo</option>
+        <option>Phạm Ngọc Quỳnh Chi</option>
+        <option>Chu Ngọc Diệp</option>
+        <option>Kim Nhật Dũng</option>
+        <option>Lê Hải Đăng</option>
+        <option>Nguyễn Anh Đức</option>
+        <option>Đàm Trọng Hiếu</option>
+        <option>Phạm Minh Hiếu</option>
+        <option>Nguyễn Đức Huy</option>
+        <option>Đào Đức Hưng</option>
+        <option>Phạm Cát Khánh</option>
+        <option>Chu Hà Gia Khánh</option>
+        <option>Ngô Xuân Khoa</option>
+        <option>Nguyễn Đăng Khoa</option>
+        <option>Nguyễn Minh Khôi</option>
+        <option>Phạm Gia Khôi</option>
+        <option>Trần Tùng Lâm</option>
+        <option>Trần Lâm</option>
+        <option>Đặng Trần Hà Linh</option>
+        <option>Lê Nhật Minh</option>
+        <option>Nguyễn Vũ Hoàng Minh</option>
+        <option>Trần Duy Minh</option>
+        <option>Bùi Dương Trà My</option>
+        <option>Phạm Nhật Nam</option>
+        <option>Nguyễn Hà Nghiệp</option>
+        <option>Nguyễn Minh Ngọc</option>
+        <option>Trần Gia Phát</option>
+        <option>Dương Thị Mai Phương</option>
+        <option>Nguyễn Anh Quân</option>
+        <option>Nguyễn Minh Sơn</option>
+        <option>Phạm Thanh Thảo</option>
+        <option>Nguyễn Thanh Thảo</option>
+        <option>Tô Phương Thảo</option>
+        <option>Nguyễn Thanh Thủy</option>
+        <option>Lai Hoàng Lan Thy</option>
+        <option>Nguyễn Thị Thanh Trà</option>
+        <option>Đỗ Quỳnh Trang</option>
+        <option>Đặng Khánh Vinh</option>
+        <option>Nguyễn Quang Vinh</option>
+        <option>Lê Quang Vũ</option>
+        <option>Vũ Như Ý</option>
+      </select><br><br>
+
+      <label for="sender">Tên bạn (người gửi):</label><br>
+      <input type="text" id="sender" required><br><br>
+
+      <label for="content">Nội dung:</label><br>
+      <textarea id="content" rows="4" cols="40" required></textarea><br><br>
+
+      <button type="submit">Gửi</button>
+    </form>
   </div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
   <script>
-    // Cấu hình Firebase của bạn
     const firebaseConfig = {
       apiKey: "AIzaSyD2ikCTbjpBs3L5gwiLKWOp5kAlBpUxSNI",
       authDomain: "a8-noitaoranhungconhodungmanh.firebaseapp.com",
@@ -126,22 +188,19 @@
       measurementId: "G-SNXX0VKYXR"
     };
 
-    // Khởi tạo Firebase
-    const app = firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Hàm load lời nhắn cho 1 user
-    async function loadMessages(userId) {
-      document.getElementById('user-title').innerText = "Lời nhắn của " + userId;
+    async function loadMessages(receiverName) {
+      document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
       const messagesDiv = document.getElementById('messages');
       messagesDiv.innerHTML = "Đang tải...";
 
       try {
         const querySnapshot = await db
           .collection("messages")
-          .doc(userId)
-          .collection("inbox")
-          .orderBy("time", "desc")
+          .where("receiver", "==", receiverName)
+          .orderBy("timestamp", "desc")
           .get();
 
         messagesDiv.innerHTML = "";
@@ -149,8 +208,8 @@
           const data = doc.data();
           messagesDiv.innerHTML += `
             <div class="message">
-              <p>${data.content}</p>
-              <div class="time">${data.time}</div>
+              <p><strong>${data.sender}</strong>: ${data.content}</p>
+              <div class="time">${data.timestamp}</div>
             </div>
           `;
         });
@@ -164,6 +223,29 @@
         messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
       }
     }
+
+    document.getElementById("messageForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const receiver = document.getElementById("receiver").value;
+      const sender = document.getElementById("sender").value;
+      const content = document.getElementById("content").value;
+      const timestamp = new Date().toLocaleString("vi-VN");
+
+      try {
+        await db.collection("messages").add({
+          receiver,
+          sender,
+          content,
+          timestamp
+        });
+        alert("Gửi thành công!");
+        document.getElementById("messageForm").reset();
+      } catch (error) {
+        console.error("Lỗi khi gửi tin nhắn:", error);
+        alert("Gửi thất bại!");
+      }
+    });
   </script>
 </body>
 </html>
