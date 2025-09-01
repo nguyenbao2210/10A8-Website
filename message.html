@@ -4,176 +4,107 @@
   <meta charset="UTF-8">
   <title>Lời nhắn 10A8 – K24</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 250px;
-      background: #222;
-      color: white;
-      padding: 15px;
-      overflow-y: auto;
-    }
-    .sidebar h2 {
-      font-size: 18px;
-      margin-top: 0;
-    }
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-    .sidebar li {
-      margin: 8px 0;
-    }
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .sidebar a:hover {
-      color: #ffcc00;
-    }
-    .content {
-      flex: 1;
-      padding: 20px;
-      background: #f9f9f9;
-      overflow-y: auto;
-    }
-    .message {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .time {
-      font-size: 12px;
-      color: #666;
-    }
-    .sender {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; text-align: center; }
+    .container { padding: 20px; }
+    .title { font-size: 18px; background: black; color: white; padding: 10px; border-radius: 5px; }
+    .options { display: flex; justify-content: center; gap: 40px; margin: 30px 0; }
+    .box { background: gray; color: white; padding: 40px; border-radius: 10px; cursor: pointer; width: 250px; font-weight: bold; transition: 0.3s; }
+    .box:hover { background: #444; }
+    .hidden { display: none; }
+    #send-box, #view-box { margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 600px; margin-left: auto; margin-right: auto; text-align: left; }
+    label { font-weight: bold; }
+    input, select, textarea { width: 100%; margin: 8px 0 15px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+    textarea { height: 150px; resize: none; }
+    button { background: #007BFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; }
+    button:hover { background: #0056b3; }
+    .message { border-bottom: 1px solid #ddd; padding: 10px 0; }
+    .time { font-size: 12px; color: #666; }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2 class="title">
+      Tại đây bạn có thể xem cảm nhận của người khác về mình hoặc viết cảm nhận của mình về 1 ai đó sau khi trải qua 3 năm học cấp 3 với nhau
+    </h2>
 
-  <div class="sidebar">
-    <h2>Danh sách bạn bè (10A8 – K24)</h2>
-    <ul>
-      <li><a onclick="loadMessages('Phạm Nhật An')">Phạm Nhật An</a></li>
-      <li><a onclick="loadMessages('Trần Thục Anh')">Trần Thục Anh</a></li>
-      <li><a onclick="loadMessages('Nguyễn Hồng Anh')">Nguyễn Hồng Anh</a></li>
-      <li><a onclick="loadMessages('Trương Nguyên Bảo')">Trương Nguyên Bảo</a></li>
-      <li><a onclick="loadMessages('Phạm Ngọc Quỳnh Chi')">Phạm Ngọc Quỳnh Chi</a></li>
-      <li><a onclick="loadMessages('Chu Ngọc Diệp')">Chu Ngọc Diệp</a></li>
-      <li><a onclick="loadMessages('Kim Nhật Dũng')">Kim Nhật Dũng</a></li>
-      <li><a onclick="loadMessages('Lê Hải Đăng')">Lê Hải Đăng</a></li>
-      <li><a onclick="loadMessages('Nguyễn Anh Đức')">Nguyễn Anh Đức</a></li>
-      <li><a onclick="loadMessages('Đàm Trọng Hiếu')">Đàm Trọng Hiếu</a></li>
-      <li><a onclick="loadMessages('Phạm Minh Hiếu')">Phạm Minh Hiếu</a></li>
-      <li><a onclick="loadMessages('Nguyễn Đức Huy')">Nguyễn Đức Huy</a></li>
-      <li><a onclick="loadMessages('Đào Đức Hưng')">Đào Đức Hưng</a></li>
-      <li><a onclick="loadMessages('Phạm Cát Khánh')">Phạm Cát Khánh</a></li>
-      <li><a onclick="loadMessages('Chu Hà Gia Khánh')">Chu Hà Gia Khánh</a></li>
-      <li><a onclick="loadMessages('Ngô Xuân Khoa')">Ngô Xuân Khoa</a></li>
-      <li><a onclick="loadMessages('Nguyễn Đăng Khoa')">Nguyễn Đăng Khoa</a></li>
-      <li><a onclick="loadMessages('Nguyễn Minh Khôi')">Nguyễn Minh Khôi</a></li>
-      <li><a onclick="loadMessages('Phạm Gia Khôi')">Phạm Gia Khôi</a></li>
-      <li><a onclick="loadMessages('Trần Tùng Lâm')">Trần Tùng Lâm</a></li>
-      <li><a onclick="loadMessages('Trần Lâm')">Trần Lâm</a></li>
-      <li><a onclick="loadMessages('Đặng Trần Hà Linh')">Đặng Trần Hà Linh</a></li>
-      <li><a onclick="loadMessages('Lê Nhật Minh')">Lê Nhật Minh</a></li>
-      <li><a onclick="loadMessages('Nguyễn Vũ Hoàng Minh')">Nguyễn Vũ Hoàng Minh</a></li>
-      <li><a onclick="loadMessages('Trần Duy Minh')">Trần Duy Minh</a></li>
-      <li><a onclick="loadMessages('Bùi Dương Trà My')">Bùi Dương Trà My</a></li>
-      <li><a onclick="loadMessages('Phạm Nhật Nam')">Phạm Nhật Nam</a></li>
-      <li><a onclick="loadMessages('Nguyễn Hà Nghiệp')">Nguyễn Hà Nghiệp</a></li>
-      <li><a onclick="loadMessages('Nguyễn Minh Ngọc')">Nguyễn Minh Ngọc</a></li>
-      <li><a onclick="loadMessages('Trần Gia Phát')">Trần Gia Phát</a></li>
-      <li><a onclick="loadMessages('Dương Thị Mai Phương')">Dương Thị Mai Phương</a></li>
-      <li><a onclick="loadMessages('Nguyễn Anh Quân')">Nguyễn Anh Quân</a></li>
-      <li><a onclick="loadMessages('Nguyễn Minh Sơn')">Nguyễn Minh Sơn</a></li>
-      <li><a onclick="loadMessages('Phạm Thanh Thảo')">Phạm Thanh Thảo</a></li>
-      <li><a onclick="loadMessages('Nguyễn Thanh Thảo')">Nguyễn Thanh Thảo</a></li>
-      <li><a onclick="loadMessages('Tô Phương Thảo')">Tô Phương Thảo</a></li>
-      <li><a onclick="loadMessages('Nguyễn Thanh Thủy')">Nguyễn Thanh Thủy</a></li>
-      <li><a onclick="loadMessages('Lai Hoàng Lan Thy')">Lai Hoàng Lan Thy</a></li>
-      <li><a onclick="loadMessages('Nguyễn Thị Thanh Trà')">Nguyễn Thị Thanh Trà</a></li>
-      <li><a onclick="loadMessages('Đỗ Quỳnh Trang')">Đỗ Quỳnh Trang</a></li>
-      <li><a onclick="loadMessages('Đặng Khánh Vinh')">Đặng Khánh Vinh</a></li>
-      <li><a onclick="loadMessages('Nguyễn Quang Vinh')">Nguyễn Quang Vinh</a></li>
-      <li><a onclick="loadMessages('Lê Quang Vũ')">Lê Quang Vũ</a></li>
-      <li><a onclick="loadMessages('Vũ Như Ý')">Vũ Như Ý</a></li>
-    </ul>
+    <p><b>BẠN MUỐN LÀM ĐIỀU GÌ Ở ĐÂY?</b></p>
+    <div class="options">
+      <div class="box" onclick="showSendBox()">Nhắn gửi lời cho ai đó</div>
+      <div class="box" onclick="showViewBox()">Xem cảm nhận của mỗi người về ai đó</div>
+    </div>
+
+    <!-- Gửi tin nhắn -->
+    <div id="send-box" class="hidden">
+      <h3>Gửi lời nhắn</h3>
+      <form id="messageForm">
+        <label for="sender">Tên bạn (người viết):</label>
+        <input type="text" id="sender" required>
+
+        <label for="receiver">Người nhận:</label>
+        <select id="receiver" required>
+          <option value="">--Chọn tên--</option>
+          <option value="pham_nhat_an">Phạm Nhật An</option>
+          <option value="tran_thuc_anh">Trần Thục Anh</option>
+          <option value="nguyen_hong_anh">Nguyễn Hồng Anh</option>
+          <option value="truong_nguyen_bao">Trương Nguyên Bảo</option>
+          <option value="pham_ngoc_quynh_chi">Phạm Ngọc Quỳnh Chi</option>
+          <option value="chu_ngoc_diep">Chu Ngọc Diệp</option>
+          <option value="kim_nhat_dung">Kim Nhật Dũng</option>
+          <option value="le_hai_dang">Lê Hải Đăng</option>
+          <option value="nguyen_anh_duc">Nguyễn Anh Đức</option>
+          <option value="dam_trong_hieu">Đàm Trọng Hiếu</option>
+          <option value="pham_minh_hieu">Phạm Minh Hiếu</option>
+          <option value="nguyen_duc_huy">Nguyễn Đức Huy</option>
+          <option value="dao_duc_hung">Đào Đức Hưng</option>
+          <option value="pham_cat_khanh">Phạm Cát Khánh</option>
+          <option value="chu_ha_gia_khanh">Chu Hà Gia Khánh</option>
+          <option value="ngo_xuan_khoa">Ngô Xuân Khoa</option>
+          <option value="nguyen_dang_khoa">Nguyễn Đăng Khoa</option>
+          <option value="nguyen_minh_khoi">Nguyễn Minh Khôi</option>
+          <option value="pham_gia_khoi">Phạm Gia Khôi</option>
+          <option value="tran_tung_lam">Trần Tùng Lâm</option>
+          <option value="tran_lam">Trần Lâm</option>
+          <option value="dang_tran_ha_linh">Đặng Trần Hà Linh</option>
+          <option value="le_nhat_minh">Lê Nhật Minh</option>
+          <option value="nguyen_vu_hoang_minh">Nguyễn Vũ Hoàng Minh</option>
+          <option value="tran_duy_minh">Trần Duy Minh</option>
+          <option value="bui_duong_tra_my">Bùi Dương Trà My</option>
+          <option value="pham_nhat_nam">Phạm Nhật Nam</option>
+          <option value="nguyen_ha_nghiep">Nguyễn Hà Nghiệp</option>
+          <option value="nguyen_minh_ngoc">Nguyễn Minh Ngọc</option>
+          <option value="tran_gia_phat">Trần Gia Phát</option>
+          <option value="duong_thi_mai_phuong">Dương Thị Mai Phương</option>
+          <option value="nguyen_anh_quan">Nguyễn Anh Quân</option>
+          <option value="nguyen_minh_son">Nguyễn Minh Sơn</option>
+          <option value="pham_thanh_thao">Phạm Thanh Thảo</option>
+          <option value="nguyen_thanh_thao">Nguyễn Thanh Thảo</option>
+          <option value="to_phuong_thao">Tô Phương Thảo</option>
+          <option value="nguyen_thanh_thuy">Nguyễn Thanh Thủy</option>
+          <option value="lai_hoang_lan_thy">Lai Hoàng Lan Thy</option>
+          <option value="nguyen_thi_thanh_tra">Nguyễn Thị Thanh Trà</option>
+          <option value="do_quynh_trang">Đỗ Quỳnh Trang</option>
+          <option value="dang_khanh_vinh">Đặng Khánh Vinh</option>
+          <option value="nguyen_quang_vinh">Nguyễn Quang Vinh</option>
+          <option value="le_quang_vu">Lê Quang Vũ</option>
+          <option value="vu_nhu_y">Vũ Như Ý</option>
+        </select>
+
+        <label for="content">Nội dung:</label>
+        <textarea id="content" placeholder="Viết lời nhắn của bạn..." required></textarea>
+
+        <button type="submit">Gửi</button>
+      </form>
+      <p id="status"></p>
+    </div>
+
+    <!-- Xem tin nhắn -->
+    <div id="view-box" class="hidden">
+      <h3 id="user-title">Chọn tên để xem lời nhắn</h3>
+      <div id="messages"></div>
+    </div>
   </div>
 
-  <div class="content">
-    <h2 id="user-title">Chọn tên để xem lời nhắn</h2>
-    <div id="messages"></div>
-
-        <h3>Gửi lời nhắn</h3>
-    <form id="messageForm">
-      <label for="receiver">Người nhận:</label><br>
-      <select id="receiver" required>
-        <option value="">--Chọn tên--</option>
-        <option>Phạm Nhật An</option>
-        <option>Trần Thục Anh</option>
-        <option>Nguyễn Hồng Anh</option>
-        <option>Trương Nguyên Bảo</option>
-        <option>Phạm Ngọc Quỳnh Chi</option>
-        <option>Chu Ngọc Diệp</option>
-        <option>Kim Nhật Dũng</option>
-        <option>Lê Hải Đăng</option>
-        <option>Nguyễn Anh Đức</option>
-        <option>Đàm Trọng Hiếu</option>
-        <option>Phạm Minh Hiếu</option>
-        <option>Nguyễn Đức Huy</option>
-        <option>Đào Đức Hưng</option>
-        <option>Phạm Cát Khánh</option>
-        <option>Chu Hà Gia Khánh</option>
-        <option>Ngô Xuân Khoa</option>
-        <option>Nguyễn Đăng Khoa</option>
-        <option>Nguyễn Minh Khôi</option>
-        <option>Phạm Gia Khôi</option>
-        <option>Trần Tùng Lâm</option>
-        <option>Trần Lâm</option>
-        <option>Đặng Trần Hà Linh</option>
-        <option>Lê Nhật Minh</option>
-        <option>Nguyễn Vũ Hoàng Minh</option>
-        <option>Trần Duy Minh</option>
-        <option>Bùi Dương Trà My</option>
-        <option>Phạm Nhật Nam</option>
-        <option>Nguyễn Hà Nghiệp</option>
-        <option>Nguyễn Minh Ngọc</option>
-        <option>Trần Gia Phát</option>
-        <option>Dương Thị Mai Phương</option>
-        <option>Nguyễn Anh Quân</option>
-        <option>Nguyễn Minh Sơn</option>
-        <option>Phạm Thanh Thảo</option>
-        <option>Nguyễn Thanh Thảo</option>
-        <option>Tô Phương Thảo</option>
-        <option>Nguyễn Thanh Thủy</option>
-        <option>Lai Hoàng Lan Thy</option>
-        <option>Nguyễn Thị Thanh Trà</option>
-        <option>Đỗ Quỳnh Trang</option>
-        <option>Đặng Khánh Vinh</option>
-        <option>Nguyễn Quang Vinh</option>
-        <option>Lê Quang Vũ</option>
-        <option>Vũ Như Ý</option>
-      </select><br><br>
-
-      <label for="sender">Tên bạn (người gửi):</label><br>
-      <input type="text" id="sender" required><br><br>
-
-      <label for="content">Nội dung:</label><br>
-      <textarea id="content" rows="4" cols="40" required></textarea><br><br>
-
-      <button type="submit">Gửi</button>
-    </form>
-  </div>
-
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
@@ -188,18 +119,52 @@
       measurementId: "G-SNXX0VKYXR"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    async function loadMessages(receiverName) {
-      document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
+    function showSendBox() {
+      document.getElementById("send-box").classList.remove("hidden");
+      document.getElementById("view-box").classList.add("hidden");
+    }
+    function showViewBox() {
+      document.getElementById("view-box").classList.remove("hidden");
+      document.getElementById("send-box").classList.add("hidden");
+    }
+
+    document.getElementById("messageForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const sender = document.getElementById("sender").value.trim();
+      const receiver = document.getElementById("receiver").value;
+      const content = document.getElementById("content").value.trim();
+      const status = document.getElementById("status");
+
+      if (!sender || !receiver || !content) {
+        status.innerText = "⚠️ Vui lòng điền đầy đủ thông tin!";
+        return;
+      }
+
+      try {
+        await db.collection("messages").doc(receiver).collection("inbox").add({
+          sender: sender,
+          content: content,
+          timestamp: new Date()
+        });
+        status.innerText = "✅ Tin nhắn đã được gửi!";
+        document.getElementById("messageForm").reset();
+      } catch (error) {
+        console.error("Lỗi gửi tin:", error);
+        status.innerText = "❌ Lỗi khi gửi tin.";
+      }
+    });
+
+    async function loadMessages(receiver) {
+      document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiver;
       const messagesDiv = document.getElementById('messages');
       messagesDiv.innerHTML = "Đang tải...";
 
       try {
-        const querySnapshot = await db
-          .collection("messages")
-          .where("receiver", "==", receiverName)
+        const querySnapshot = await db.collection("messages")
+          .doc(receiver).collection("inbox")
           .orderBy("timestamp", "desc")
           .get();
 
@@ -208,8 +173,8 @@
           const data = doc.data();
           messagesDiv.innerHTML += `
             <div class="message">
-              <p><strong>${data.sender}</strong>: ${data.content}</p>
-              <div class="time">${data.timestamp}</div>
+              <p><strong>${data.sender}:</strong> ${data.content}</p>
+              <div class="time">${data.timestamp.toDate().toLocaleString()}</div>
             </div>
           `;
         });
@@ -217,35 +182,11 @@
         if (messagesDiv.innerHTML === "") {
           messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
         }
-
       } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu:", error);
+        console.error("Lỗi khi tải dữ liệu:", error);
         messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
       }
     }
-
-    document.getElementById("messageForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const receiver = document.getElementById("receiver").value;
-      const sender = document.getElementById("sender").value;
-      const content = document.getElementById("content").value;
-      const timestamp = new Date().toLocaleString("vi-VN");
-
-      try {
-        await db.collection("messages").add({
-          receiver,
-          sender,
-          content,
-          timestamp
-        });
-        alert("Gửi thành công!");
-        document.getElementById("messageForm").reset();
-      } catch (error) {
-        console.error("Lỗi khi gửi tin nhắn:", error);
-        alert("Gửi thất bại!");
-      }
-    });
   </script>
 </body>
 </html>
