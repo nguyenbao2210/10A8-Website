@@ -243,40 +243,42 @@
     }
     window.sendMessage = sendMessage;
 
-    // Load tin nhắn
-    async function loadMessages(receiverName) {
-      document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
-      const messagesDiv = document.getElementById('messages');
-      messagesDiv.innerHTML = "Đang tải...";
+// Load tin nhắn (cách lọc bằng JS)
+async function loadMessages(receiverName) {
+  document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
+  const messagesDiv = document.getElementById('messages');
+  messagesDiv.innerHTML = "Đang tải...";
 
-      try {
-        const q = query(
-          collection(db, "messages"),
-          where("receiver", "==", receiverName),
-          orderBy("timestamp", "desc")
-        );
-        const snapshot = await getDocs(q);
+  try {
+    const q = query(
+      collection(db, "messages"),
+      orderBy("timestamp", "desc")
+    );
+    const snapshot = await getDocs(q);
 
-        messagesDiv.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
-          messagesDiv.innerHTML += `
-            <div class="message">
-              <strong>${data.sender}</strong> (${date}):<br>${data.content}
-            </div>
-          `;
-        });
-
-        if (messagesDiv.innerHTML === "") {
-          messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
-        }
-      } catch (error) {
-        console.error("Lỗi khi tải dữ liệu:", error);
-        messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+    messagesDiv.innerHTML = "";
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      // Lọc trực tiếp bằng JS
+      if (data.receiver === receiverName) {
+        const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
+        messagesDiv.innerHTML += `
+          <div class="message">
+            <strong>${data.sender}</strong> (${date}):<br>${data.content}
+          </div>
+        `;
       }
+    });
+
+    if (messagesDiv.innerHTML === "") {
+      messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
     }
-    window.loadMessages = loadMessages;
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu:", error);
+    messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+  }
+}
+window.loadMessages = loadMessages;
   </script>
 </body>
 </html>
