@@ -11,7 +11,6 @@
       display: flex;
       height: 100vh;
 
-      /* 🌈 Gradient động */
       background: linear-gradient(-45deg, #1e3c72, #2a5298, #fbc531, #00a8ff);
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
@@ -19,14 +18,13 @@
       z-index: 0;
     }
 
-    /* 🌆 Overlay ảnh kỉ niệm */
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       background: url('lop10a8.jpg') center/cover no-repeat;
-      opacity: 0.12;  /* ảnh mờ */
-      z-index: -1;
+      opacity: 0.12;
+      z-index: -1; 
     }
 
     @keyframes gradientBG {
@@ -97,10 +95,21 @@
       background: #ffcc00;
       color: #222;
     }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;         
+      pointer-events: none;
+    }
+
+    .content, .sidebar {
+      position: relative;
+      z-index: 1;         
+    }
   </style>
 </head>
 <body>
-
   <div class="sidebar">
     <h2>Danh sách bạn bè (10A8 – K24)</h2>
     <ul>
@@ -217,7 +226,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyD2ikCTbjpBs3L5gwiLKWOp5kAlBpUxSNI",
       authDomain: "a8-noitaoranhungconhodungmanh.firebaseapp.com",
@@ -296,7 +304,6 @@
     const ctx = canvas.getContext("2d");
 
     let particles = [];
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -304,13 +311,12 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // Khởi tạo particle
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 120; i++) {   
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 2 + 1,
-        speedY: Math.random() * 0.3 + 0.1,
+        radius: Math.random() * 2.2 + 0.8,
+        speedY: Math.random() * 0.35 + 0.12,
         opacity: Math.random() * 0.5 + 0.3
       });
     }
@@ -320,7 +326,7 @@
       particles.forEach(p => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
         ctx.fill();
 
         p.y += p.speedY;
@@ -331,13 +337,7 @@
       });
       requestAnimationFrame(animateParticles);
     }
-
     animateParticles();
-
-    canvas.style.position = "fixed";
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.zIndex = "-2";
   </script>
 </body>
 </html>
