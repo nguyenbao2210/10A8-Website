@@ -184,7 +184,6 @@
     <div id="messages"></div>
   </div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
@@ -206,36 +205,37 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Hàm load tất cả tin nhắn
-    async function loadMessages(receiverName) {
-      document.getElementById('user-title').innerText = "Lời nhắn (toàn bộ) hoặc cho " + receiverName;
-      const messagesDiv = document.getElementById('messages');
-      messagesDiv.innerHTML = "Đang tải...";
+async function loadMessages(receiverName) {
+  document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
+  const messagesDiv = document.getElementById('messages');
+  messagesDiv.innerHTML = "Đang tải...";
 
-      try {
-        const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
-        const snapshot = await getDocs(q);
+  try {
+    const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
+    const snapshot = await getDocs(q);
 
-        messagesDiv.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
-          messagesDiv.innerHTML += `
-            <div class="message">
-              <strong>${data.sender} ➝ ${data.receiver}</strong> (${date}):<br>${data.content}
-            </div>
-          `;
-        });
-
-        if (messagesDiv.innerHTML === "") {
-          messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
-        }
-      } catch (error) {
-        console.error("Lỗi khi tải dữ liệu:", error);
-        messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+    messagesDiv.innerHTML = "";
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data.receiver === receiverName) {
+        const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
+        messagesDiv.innerHTML += `
+          <div class="message">
+            <strong>${data.sender}</strong> (${date}):<br>${data.content}
+          </div>
+        `;
       }
+    });
+
+    if (messagesDiv.innerHTML === "") {
+      messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
     }
-    window.loadMessages = loadMessages;
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu:", error);
+    messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+  }
+}
+window.loadMessages = loadMessages;
 
     // Xử lý gửi tin nhắn
     const submitBtn = document.getElementById("submitBtn");
