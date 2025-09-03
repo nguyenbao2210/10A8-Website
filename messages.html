@@ -51,34 +51,25 @@
       font-size: 12px;
       color: #666;
     }
-    .form {
+    .form-section {
       margin-bottom: 20px;
-      padding: 15px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 5px;
     }
-    .form input, .form textarea, .form select {
-      display: block;
+    .form-section input, .form-section select, .form-section textarea {
       width: 100%;
-      margin: 10px 0;
       padding: 8px;
-      font-size: 14px;
+      margin: 5px 0;
+      box-sizing: border-box;
     }
-    .form textarea {
-      height: 120px;
-      resize: vertical;
-    }
-    .form button {
+    .form-section button {
+      padding: 10px 15px;
       background: #222;
       color: white;
       border: none;
-      padding: 10px 15px;
       cursor: pointer;
     }
-    .form button:hover {
+    .form-section button:hover {
       background: #ffcc00;
-      color: black;
+      color: #222;
     }
   </style>
 </head>
@@ -134,11 +125,10 @@
     </ul>
   </div>
 
-  <div class="content">
-    <div class="form">
-      <h2>Gửi lời nhắn</h2>
+<div class="content">
+    <div class="form-section">
+      <h2>✍️ Gửi lời nhắn</h2>
       <input type="text" id="senderInput" placeholder="Tên của bạn...">
-
       <select id="receiverInput">
         <option value="">-- Chọn người nhận --</option>
         <option value="Phạm Nhật An">Phạm Nhật An</option>
@@ -186,9 +176,8 @@
         <option value="Lê Quang Vũ">Lê Quang Vũ</option>
         <option value="Vũ Như Ý">Vũ Như Ý</option>
       </select>
-
-      <textarea id="messageInput" placeholder="Nhập lời nhắn..."></textarea>
-      <button onclick="sendMessage()">Gửi</button>
+      <textarea id="messageInput" rows="5" placeholder="Nhập lời nhắn..."></textarea>
+      <button id="submitBtn">Gửi</button>
     </div>
 
     <h2 id="user-title">Chọn tên để xem lời nhắn</h2>
@@ -201,8 +190,9 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyD2ikCTbjpBs3L5gwiLKWOp5kAlBpUxSNI",
       authDomain: "a8-noitaoranhungconhodungmanh.firebaseapp.com",
@@ -216,14 +206,46 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Gửi tin nhắn
-    async function sendMessage() {
+    // Hàm load tất cả tin nhắn
+    async function loadMessages(receiverName) {
+      document.getElementById('user-title').innerText = "Lời nhắn (toàn bộ) hoặc cho " + receiverName;
+      const messagesDiv = document.getElementById('messages');
+      messagesDiv.innerHTML = "Đang tải...";
+
+      try {
+        const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(q);
+
+        messagesDiv.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
+          messagesDiv.innerHTML += `
+            <div class="message">
+              <strong>${data.sender} ➝ ${data.receiver}</strong> (${date}):<br>${data.content}
+            </div>
+          `;
+        });
+
+        if (messagesDiv.innerHTML === "") {
+          messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
+        }
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu:", error);
+        messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+      }
+    }
+    window.loadMessages = loadMessages;
+
+    // Xử lý gửi tin nhắn
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", async () => {
       const sender = document.getElementById("senderInput").value.trim();
       const receiver = document.getElementById("receiverInput").value.trim();
-      const content = document.getElementById("messageInput").value.trim();
+      const msg = document.getElementById("messageInput").value.trim();
 
-      if (!sender || !receiver || !content) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
+      if (!sender || !receiver || !msg) {
+        alert("Vui lòng nhập đầy đủ thông tin.");
         return;
       }
 
@@ -231,54 +253,16 @@
         await addDoc(collection(db, "messages"), {
           sender: sender,
           receiver: receiver,
-          content: content,
-          timestamp: serverTimestamp()
+          content: msg,
+          timestamp: new Date()
         });
         alert("Gửi thành công!");
         document.getElementById("messageInput").value = "";
       } catch (error) {
         console.error("Lỗi khi gửi:", error);
-        alert("Không thể gửi tin nhắn, thử lại sau!");
-      }
-    }
-    window.sendMessage = sendMessage;
-
-// Load tin nhắn (cách lọc bằng JS)
-async function loadMessages(receiverName) {
-  document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
-  const messagesDiv = document.getElementById('messages');
-  messagesDiv.innerHTML = "Đang tải...";
-
-  try {
-    const q = query(
-      collection(db, "messages"),
-      orderBy("timestamp", "desc")
-    );
-    const snapshot = await getDocs(q);
-
-    messagesDiv.innerHTML = "";
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      // Lọc trực tiếp bằng JS
-      if (data.receiver === receiverName) {
-        const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
-        messagesDiv.innerHTML += `
-          <div class="message">
-            <strong>${data.sender}</strong> (${date}):<br>${data.content}
-          </div>
-        `;
+        alert("Có lỗi xảy ra khi gửi.");
       }
     });
-
-    if (messagesDiv.innerHTML === "") {
-      messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
-    }
-  } catch (error) {
-    console.error("Lỗi khi tải dữ liệu:", error);
-    messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
-  }
-}
-window.loadMessages = loadMessages;
   </script>
 </body>
 </html>
