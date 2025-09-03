@@ -10,10 +10,34 @@
       padding: 0;
       display: flex;
       height: 100vh;
+
+      /* 🌈 Gradient động */
+      background: linear-gradient(-45deg, #1e3c72, #2a5298, #fbc531, #00a8ff);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      z-index: 0;
     }
+
+    /* 🌆 Overlay ảnh kỉ niệm */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('lop10a8.jpg') center/cover no-repeat;
+      opacity: 0.12;  /* ảnh mờ */
+      z-index: -1;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
     .sidebar {
       width: 250px;
-      background: #222;
+      background: rgba(34, 34, 34, 0.85);
       color: white;
       padding: 15px;
       overflow-y: auto;
@@ -40,8 +64,10 @@
     .content {
       flex: 1;
       padding: 20px;
-      background: #f9f9f9;
+      background: rgba(249, 249, 249, 0.85);
       overflow-y: auto;
+      border-radius: 8px;
+      margin: 10px;
     }
     .message {
       border-bottom: 1px solid #ddd;
@@ -205,39 +231,38 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-async function loadMessages(receiverName) {
-  document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
-  const messagesDiv = document.getElementById('messages');
-  messagesDiv.innerHTML = "Đang tải...";
+    async function loadMessages(receiverName) {
+      document.getElementById('user-title').innerText = "Lời nhắn dành cho " + receiverName;
+      const messagesDiv = document.getElementById('messages');
+      messagesDiv.innerHTML = "Đang tải...";
 
-  try {
-    const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
-    const snapshot = await getDocs(q);
+      try {
+        const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(q);
 
-    messagesDiv.innerHTML = "";
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      if (data.receiver === receiverName) {
-        const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
-        messagesDiv.innerHTML += `
-          <div class="message">
-            <strong>${data.sender}</strong> (${date}):<br>${data.content}
-          </div>
-        `;
+        messagesDiv.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.receiver === receiverName) {
+            const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
+            messagesDiv.innerHTML += `
+              <div class="message">
+                <strong>${data.sender}</strong> (${date}):<br>${data.content}
+              </div>
+            `;
+          }
+        });
+
+        if (messagesDiv.innerHTML === "") {
+          messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
+        }
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu:", error);
+        messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
       }
-    });
-
-    if (messagesDiv.innerHTML === "") {
-      messagesDiv.innerHTML = "<p>Chưa có lời nhắn nào.</p>";
     }
-  } catch (error) {
-    console.error("Lỗi khi tải dữ liệu:", error);
-    messagesDiv.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
-  }
-}
-window.loadMessages = loadMessages;
+    window.loadMessages = loadMessages;
 
-    // Xử lý gửi tin nhắn
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.addEventListener("click", async () => {
       const sender = document.getElementById("senderInput").value.trim();
@@ -263,6 +288,56 @@ window.loadMessages = loadMessages;
         alert("Có lỗi xảy ra khi gửi.");
       }
     });
+  </script>
+
+  <canvas id="particles"></canvas>
+  <script>
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Khởi tạo particle
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        speedY: Math.random() * 0.3 + 0.1,
+        opacity: Math.random() * 0.5 + 0.3
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        ctx.fill();
+
+        p.y += p.speedY;
+        if (p.y > canvas.height) {
+          p.y = -p.radius;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    canvas.style.position = "fixed";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.zIndex = "-2";
   </script>
 </body>
 </html>
