@@ -3,7 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <title>Gallery – 10A8 K24</title>
-  <link rel="stylesheet" href="style.css"> <!-- có thể tách style chung sau -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: rgba(34, 34, 34, 0.85);
+      color: white;
+      padding: 15px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .sidebar h2 { margin: 0 0 10px; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar li { margin: 8px 0; }
+    .sidebar a { color: white; text-decoration: none; }
+    .sidebar a:hover { color: #ffcc00; }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      background: rgba(249, 249, 249, 0.85);
+      border-radius: 8px;
+      margin: 10px;
+      overflow-y: auto;
+      z-index: 1;
+    }
+
+    .right-panel {
+      width: 80px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .right-panel a {
+      color: white;
+      text-decoration: none;
+      margin: 20px 0;
+      font-size: 24px;
+      transition: 0.3s;
+    }
+    .right-panel a:hover { color: #ffcc00; }
+
+    #bokeh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
   <div class="sidebar">
@@ -22,13 +84,51 @@
 
   <div class="right-panel">
     <a href="index.html" title="Trang chủ">🏠</a>
-    <a href="gallery.html" title="Gallery">🖼</a>
     <a href="video.html" title="Video">🎬</a>
     <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
 
-  <canvas id="particles"></canvas>
-  <script src="particles.js"></script>
+  <canvas id="bokeh"></canvas>
+  <script>
+    const canvas = document.getElementById("bokeh");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const circles = [];
+    for (let i = 0; i < 40; i++) {
+      circles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 60 + 20,
+        dx: (Math.random() - 0.5) * 0.4,
+        dy: (Math.random() - 0.5) * 0.4,
+        alpha: Math.random() * 0.4 + 0.2
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let c of circles) {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${c.alpha})`;
+        ctx.fill();
+        c.x += c.dx;
+        c.y += c.dy;
+        if (c.x < -c.r) c.x = canvas.width + c.r;
+        if (c.x > canvas.width + c.r) c.x = -c.r;
+        if (c.y < -c.r) c.y = canvas.height + c.r;
+        if (c.y > canvas.height + c.r) c.y = -c.r;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
-
