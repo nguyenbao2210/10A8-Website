@@ -7,7 +7,8 @@
     body {
       margin: 0;
       padding: 0;
-      display: flex;
+      display: flex;         
+      flex-direction: row;
       height: 100vh;
       font-family: Arial, sans-serif;
       color: #333;
@@ -23,28 +24,30 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* Panel trái */
     .left-panel {
       width: 80px;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
-      flex-direction: column;
+      flex-direction: column;  
       align-items: center;
       justify-content: flex-start;
       padding-top: 20px;
       flex-shrink: 0;
-      z-index: 1;
+      z-index: 10;
     }
     .left-panel a {
+      display: block;
       color: white;
       text-decoration: none;
       margin: 20px 0;
-      font-size: 24px;
+      font-size: 28px;
       transition: 0.3s;
     }
     .left-panel a:hover { color: #ffcc00; }
 
+    /* Nội dung */
     .content {
       flex: 1;
       padding: 20px;
@@ -65,6 +68,7 @@
     <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
 
+  <!-- Nội dung chính -->
   <div class="content">
     <h2>🎬 Video 10A8</h2>
     <p>Đây là nơi để nhúng các video Youtube hoặc clip của lớp.</p>
