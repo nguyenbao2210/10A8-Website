@@ -7,34 +7,37 @@
     body {
       margin: 0;
       padding: 0;
-      display: flex;
+      display: flex;         /* sắp xếp ngang */
+      flex-direction: row;
       height: 100vh;
       font-family: Arial, sans-serif;
       color: #333;
     }
 
+    /* Panel trái */
     .left-panel {
       width: 80px;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
-      flex-direction: column;
+      flex-direction: column;   /* icon dọc */
       align-items: center;
       justify-content: flex-start;
       padding-top: 20px;
       flex-shrink: 0;
-      z-index: 1;
+      z-index: 10;
     }
     .left-panel a {
+      display: block;
       color: white;
       text-decoration: none;
       margin: 20px 0;
-      font-size: 24px;
+      font-size: 28px;
       transition: 0.3s;
     }
     .left-panel a:hover { color: #ffcc00; }
 
+    /* Nội dung */
     .content {
       flex: 1;
       padding: 20px;
@@ -45,6 +48,7 @@
       z-index: 1;
     }
 
+    /* Hiệu ứng Bokeh */
     #bokeh {
       position: fixed;
       inset: 0;
@@ -62,12 +66,13 @@
     <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
 
+  <!-- Nội dung chính -->
   <div class="content">
     <h2>🖼 Gallery 10A8</h2>
     <p>Đây là nơi sẽ hiển thị album ảnh của lớp.</p>
   </div>
 
-  <!-- Hiệu ứng bokeh -->
+  <!-- Canvas Bokeh -->
   <canvas id="bokeh"></canvas>
   <script>
     const canvas = document.getElementById("bokeh");
