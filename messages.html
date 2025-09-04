@@ -219,6 +219,14 @@
     <div id="messages"></div>
   </div>
 
+  <div class="right-panel">
+    <a href="index.html" title="Trang chủ">🏠</a>
+    <a href="gallery.html" title="Gallery">🖼</a>
+    <a href="video.html" title="Video">🎬</a>
+    <a href="messages.html" title="Lời nhắn">💬</a>
+  </div>
+
+
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
@@ -311,7 +319,7 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    for (let i = 0; i < 120; i++) {   
+    for (let i = 0; i < 120; i++) {  
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
