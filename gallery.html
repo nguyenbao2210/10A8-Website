@@ -7,11 +7,21 @@
     body {
       margin: 0;
       padding: 0;
-      display: flex;         /* sắp xếp ngang */
+      display: flex;         
       flex-direction: row;
       height: 100vh;
       font-family: Arial, sans-serif;
       color: #333;
+      position: relative;   /* để canvas fixed đúng */
+      overflow: hidden;
+    }
+
+    /* Canvas bokeh nền */
+    #bokeh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;            /* ở dưới */
+      pointer-events: none;
     }
 
     /* Panel trái */
@@ -20,12 +30,12 @@
       height: 100vh;
       background: rgba(0, 0, 0, 0.85);
       display: flex;
-      flex-direction: column;   /* icon dọc */
+      flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       padding-top: 20px;
       flex-shrink: 0;
-      z-index: 10;
+      z-index: 1;            /* nổi trên canvas */
     }
     .left-panel a {
       display: block;
@@ -46,21 +56,18 @@
       margin: 10px;
       overflow-y: auto;
       z-index: 1;
-    }
-
-    /* Hiệu ứng Bokeh */
-    #bokeh {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+      position: relative;
     }
   </style>
 </head>
 <body>
+  <!-- Canvas Bokeh (luôn đứng dưới) -->
+  <canvas id="bokeh"></canvas>
+
   <!-- Panel trái -->
   <div class="left-panel">
     <a href="index.html" title="Trang chủ">🏠</a>
+    <a href="gallery.html" title="Gallery">🖼</a>
     <a href="video.html" title="Video">🎬</a>
     <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
@@ -71,8 +78,6 @@
     <p>Đây là nơi sẽ hiển thị album ảnh của lớp.</p>
   </div>
 
-  <!-- Canvas Bokeh -->
-  <canvas id="bokeh"></canvas>
   <script>
     const canvas = document.getElementById("bokeh");
     const ctx = canvas.getContext("2d");
