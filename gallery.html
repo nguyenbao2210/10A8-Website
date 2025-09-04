@@ -12,7 +12,7 @@
       height: 100vh;
       font-family: Arial, sans-serif;
       color: #333;
-      position: relative;   /* để canvas fixed đúng */
+      position: relative;
       overflow: hidden;
     }
 
@@ -20,7 +20,7 @@
     #bokeh {
       position: fixed;
       inset: 0;
-      z-index: 0;            /* ở dưới */
+      z-index: 0;
       pointer-events: none;
     }
 
@@ -35,7 +35,7 @@
       justify-content: flex-start;
       padding-top: 20px;
       flex-shrink: 0;
-      z-index: 1;            /* nổi trên canvas */
+      z-index: 1;
     }
     .left-panel a {
       display: block;
@@ -61,18 +61,17 @@
   </style>
 </head>
 <body>
-  <!-- Canvas Bokeh (luôn đứng dưới) -->
+  <!-- Canvas Bokeh -->
   <canvas id="bokeh"></canvas>
 
   <!-- Panel trái -->
   <div class="left-panel">
     <a href="index.html" title="Trang chủ">🏠</a>
-    <a href="gallery.html" title="Gallery">🖼</a>
     <a href="video.html" title="Video">🎬</a>
     <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
 
-  <!-- Nội dung chính -->
+  <!-- Nội dung -->
   <div class="content">
     <h2>🖼 Gallery 10A8</h2>
     <p>Đây là nơi sẽ hiển thị album ảnh của lớp.</p>
@@ -89,15 +88,17 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
+    const colors = ["#ff6b6b", "#ffd93d", "#6bcfff", "#a36bff", "#4dff91"];
     const circles = [];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 60; i++) {
       circles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 60 + 20,
-        dx: (Math.random() - 0.5) * 0.4,
-        dy: (Math.random() - 0.5) * 0.4,
-        alpha: Math.random() * 0.4 + 0.2
+        r: Math.random() * 50 + 20,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.5 + 0.3
       });
     }
 
@@ -106,8 +107,11 @@
       for (let c of circles) {
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${c.alpha})`;
+        ctx.fillStyle = c.color;
+        ctx.globalAlpha = c.alpha;
         ctx.fill();
+        ctx.globalAlpha = 1;
+
         c.x += c.dx;
         c.y += c.dy;
         if (c.x < -c.r) c.x = canvas.width + c.r;
