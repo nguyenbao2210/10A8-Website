@@ -39,6 +39,7 @@
       color: white;
       padding: 15px;
       overflow-y: auto;
+      flex-shrink: 0;
     }
     .sidebar h2 {
       font-size: 18px;
@@ -67,7 +68,6 @@
       overflow-y: auto;
       border-radius: 8px;
       margin: 10px;
-      max-width: calc(100% - 330px); 
     }
 
     .message {
@@ -102,24 +102,26 @@
     #particles {
       position: fixed;
       inset: 0;
-      z-index: 0;        
+      z-index: 0;          
       pointer-events: none;
     }
 
-    .content, .sidebar {
+    .content, .sidebar, .right-panel {
       position: relative;
-      z-index: 1;        
+      z-index: 1;          
     }
 
     .right-panel {
       width: 80px;
+      height: 100vh;
       background: rgba(0, 0, 0, 0.6);
       color: white;
       display: flex;
-      flex-direction: column;
+      flex-direction: column;  
       align-items: center;
       justify-content: flex-start;
       padding-top: 20px;
+      flex-shrink: 0;          
     }
 
     .right-panel a {
@@ -253,7 +255,6 @@
     <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
 
-
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
@@ -346,7 +347,7 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    for (let i = 0; i < 120; i++) {  
+    for (let i = 0; i < 120; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
