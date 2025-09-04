@@ -13,31 +13,7 @@
       color: #333;
     }
 
-    .sidebar {
-      width: 250px;
-      background: rgba(34, 34, 34, 0.85);
-      color: white;
-      padding: 15px;
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-    .sidebar h2 { margin: 0 0 10px; }
-    .sidebar ul { list-style: none; padding: 0; }
-    .sidebar li { margin: 8px 0; }
-    .sidebar a { color: white; text-decoration: none; }
-    .sidebar a:hover { color: #ffcc00; }
-
-    .content {
-      flex: 1;
-      padding: 20px;
-      background: rgba(249, 249, 249, 0.85);
-      border-radius: 8px;
-      margin: 10px;
-      overflow-y: auto;
-      z-index: 1;
-    }
-
-    .right-panel {
+    .left-panel {
       width: 80px;
       height: 100vh;
       background: rgba(0, 0, 0, 0.6);
@@ -50,14 +26,24 @@
       flex-shrink: 0;
       z-index: 1;
     }
-    .right-panel a {
+    .left-panel a {
       color: white;
       text-decoration: none;
       margin: 20px 0;
       font-size: 24px;
       transition: 0.3s;
     }
-    .right-panel a:hover { color: #ffcc00; }
+    .left-panel a:hover { color: #ffcc00; }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      background: rgba(249, 249, 249, 0.85);
+      border-radius: 8px;
+      margin: 10px;
+      overflow-y: auto;
+      z-index: 1;
+    }
 
     #bokeh {
       position: fixed;
@@ -68,13 +54,12 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Gallery ảnh</h2>
-    <ul>
-      <li><a href="#">Ảnh lớp</a></li>
-      <li><a href="#">Hoạt động ngoại khóa</a></li>
-      <li><a href="#">Kỉ niệm</a></li>
-    </ul>
+  <!-- Panel trái -->
+  <div class="left-panel">
+    <a href="index.html" title="Trang chủ">🏠</a>
+    <a href="gallery.html" title="Gallery">🖼</a>
+    <a href="video.html" title="Video">🎬</a>
+    <a href="messages.html" title="Lời nhắn">💬</a>
   </div>
 
   <div class="content">
@@ -82,12 +67,7 @@
     <p>Đây là nơi sẽ hiển thị album ảnh của lớp.</p>
   </div>
 
-  <div class="right-panel">
-    <a href="index.html" title="Trang chủ">🏠</a>
-    <a href="video.html" title="Video">🎬</a>
-    <a href="messages.html" title="Lời nhắn">💬</a>
-  </div>
-
+  <!-- Hiệu ứng bokeh -->
   <canvas id="bokeh"></canvas>
   <script>
     const canvas = document.getElementById("bokeh");
