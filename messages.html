@@ -59,6 +59,7 @@
     .sidebar a:hover {
       color: #ffcc00;
     }
+
     .content {
       flex: 1;
       padding: 20px;
@@ -66,7 +67,9 @@
       overflow-y: auto;
       border-radius: 8px;
       margin: 10px;
+      max-width: calc(100% - 330px); 
     }
+
     .message {
       border-bottom: 1px solid #ddd;
       padding: 10px 0;
@@ -99,17 +102,41 @@
     #particles {
       position: fixed;
       inset: 0;
-      z-index: 0;         
+      z-index: 0;        
       pointer-events: none;
     }
 
     .content, .sidebar {
       position: relative;
-      z-index: 1;         
+      z-index: 1;        
+    }
+
+    .right-panel {
+      width: 80px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20px;
+    }
+
+    .right-panel a {
+      color: white;
+      text-decoration: none;
+      margin: 20px 0;
+      font-size: 24px;
+      transition: 0.3s;
+    }
+
+    .right-panel a:hover {
+      color: #ffcc00;
     }
   </style>
 </head>
 <body>
+  
   <div class="sidebar">
     <h2>Danh sách bạn bè (10A8 – K24)</h2>
     <ul>
