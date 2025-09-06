@@ -135,6 +135,19 @@
     .right-panel a:hover {
       color: #ffcc00;
     }
+
+    .reactions {
+      margin-top: 5px;
+      font-size: 18px;
+    }
+    .reactions span {
+      cursor: pointer;
+      margin-right: 10px;
+      transition: transform 0.2s;
+    }
+    .reactions span:hover {
+      transform: scale(1.2);
+    }
   </style>
 </head>
 <body>
@@ -259,7 +272,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD2ikCTbjpBs3L5gwiLKWOp5kAlBpUxSNI",
@@ -284,13 +297,20 @@
         const snapshot = await getDocs(q);
 
         messagesDiv.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const data = doc.data();
+        snapshot.forEach((docSnap) => {
+          const data = docSnap.data();
           if (data.receiver === receiverName) {
             const date = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : "";
+            const reactions = data.reactions || { heart: 0, like: 0, sad: 0, haha: 0 };
             messagesDiv.innerHTML += `
-              <div class="message">
+              <div class="message" data-id="${docSnap.id}">
                 <strong>${data.sender}</strong> (${date}):<br>${data.content}
+                <div class="reactions">
+                  <span onclick="react('${docSnap.id}', 'heart')">❤️ ${reactions.heart}</span>
+                  <span onclick="react('${docSnap.id}', 'like')">👍 ${reactions.like}</span>
+                  <span onclick="react('${docSnap.id}', 'sad')">😢 ${reactions.sad}</span>
+                  <span onclick="react('${docSnap.id}', 'haha')">😂 ${reactions.haha}</span>
+                </div>
               </div>
             `;
           }
@@ -305,6 +325,18 @@
       }
     }
     window.loadMessages = loadMessages;
+
+    window.react = async function (messageId, type) {
+      try {
+        const messageRef = doc(db, "messages", messageId);
+        await updateDoc(messageRef, {
+          [`reactions.${type}`]: increment(1)
+        });
+        loadMessages(document.getElementById('user-title').innerText.replace("Lời nhắn dành cho ", ""));
+      } catch (e) {
+        console.error("Lỗi khi thả reaction:", e);
+      }
+    };
 
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.addEventListener("click", async () => {
@@ -322,7 +354,8 @@
           sender: sender,
           receiver: receiver,
           content: msg,
-          timestamp: new Date()
+          timestamp: new Date(),
+          reactions: { heart: 0, like: 0, sad: 0, haha: 0 }
         });
         alert("Gửi thành công!");
         document.getElementById("messageInput").value = "";
